@@ -1,15 +1,36 @@
-## Put comments here that give an overall description of what your
-## functions do
+## creating two functions, first to create a temp matrix to pull from
+## and second to solve for it
 
-## Write a short comment describing this function
+## takes a square matrix as argument and returns a list to use in cacheSolve 
 
 makeCacheMatrix <- function(x = matrix()) {
+    i <- NULL
+    set <- function(y) {
+      x <<- y
+      i <<- NULL
+    }
+    get <- function() x
+    setinv <- function(inverse) i <<- inverse
+    getinv <- function() i
+    list(set = set, get = get, 
+         setinv = setinv, getinv = getinv)
 
 }
 
 
-## Write a short comment describing this function
+## takes a list from makeCacheMatrix and returns the inverse of the original 
+## input
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+  i <- x$getinv()
+  
+  if(!is.null(i)) {
+    message("getting cached data...")
+    return(i)
+  }
+  m.data <- x$get()
+  i <- solve(m.data)
+  
+  x$setinv(i)
+  i
 }
